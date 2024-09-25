@@ -26,6 +26,7 @@ This project is a production-ready YOLOv8n-based Computer Vision system for egg 
 - **MODEL.md**: Detailed information about the model architecture, training process, and performance
 - **PROCESS.md**: Comprehensive overview of the development process and implementation plan
 - **AWS-PLAN-DESIGN-AND-COST-REPORT.md**: Detailed report on the proposed AWS implementation and associated costs
+- **Testing-dataset.png**:
 
 ## Model Performance
 
