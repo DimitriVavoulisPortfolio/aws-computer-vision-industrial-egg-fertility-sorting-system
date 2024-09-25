@@ -11,6 +11,7 @@ This project is a production-ready YOLOv8n-based Computer Vision system for egg 
 - Comprehensive testing with both individual images and batch processing
 - Correction mechanism for handling multiple detections
 - Designs for AWS architecture for potential future deployment
+- Standarized design for implementation to per conveyor belt for high scalability
 
 ## Project Structure
 
