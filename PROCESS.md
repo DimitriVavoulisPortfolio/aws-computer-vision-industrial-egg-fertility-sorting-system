@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-This document outlines the development process for our egg fertility detection system, designed for high-speed, single-column conveyor belt egg processing using AWS services. The system balances speed, cost-efficiency, and accuracy through strategic design choices and optimizations.
+This document outlines the development process for the egg fertility detection system, designed for high-speed, single-column conveyor belt egg processing using AWS services. The system balances speed, cost-efficiency, and accuracy through strategic design choices and optimizations.
 
 ## Development Stages
 
@@ -30,30 +30,39 @@ This document outlines the development process for our egg fertility detection s
 2. **API Gateway**:
    - Provides secure API endpoint for edge devices
 
-3. **Lambda Function**:
+3. **EC2 Instance**:
    - Processes images using YOLOv8n model
    - Determines egg fertility
    - Implements correction code for multiple detections
 
 4. **S3 Buckets**:
-   - Model Storage: For storing the YOLOv8n model
    - Results Storage: For storing processing results and logs
+   - Metrics Storage: For storing daily results metrics to be used later
 
 5. **CloudWatch**:
    - Monitors system performance and health
 
+6. **Lambda Function**:
+   - Extracts the data daily after the daily production schedule
+   - Makes a file with a report of the daily results to upload into the Metrics Storage S3 Bucket
+   - Deletes the data in the Results Storage S3 Bucket for cost reduction
+   
 #### Data Flow
 1. Edge device captures image of a single egg on the conveyor belt
 2. Image is sent to API Gateway
-3. API Gateway triggers Lambda function
-4. Lambda function processes the image:
-   - Downloads model from S3 (if not cached)
+3. API Gateway inputs to EC2 Instance
+4. EC2 Instance processes the image:
    - Performs fertility detection
    - Applies correction code for multiple detections
    - Stores results in S3
    - Returns results to API Gateway
 5. Results are sent back to edge device
 6. Edge device controls conveyor belt based on results
+(after production hours)
+8. Lambda function is trigered:
+   - Extract Results Storage S3 Bucket data
+   - Make a report and dowNloads it to the Metrics Storage S3 Bucket
+   - Deletes all the data in the Results Storage S3 Bucket
 
 ## Implementation Plan
 
