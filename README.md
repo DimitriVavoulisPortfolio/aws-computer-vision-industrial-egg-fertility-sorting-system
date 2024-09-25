@@ -54,7 +54,7 @@ Speed Performance:
 
 3. To test the model with individual images:
    ```
-   python test_single_image.py
+   python yolov8n-egg-detection-single-image-test v1.2.py
    ```
 
 4. To test the model with datasets:
