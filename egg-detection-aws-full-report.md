@@ -7,22 +7,21 @@
 ```mermaid
 graph LR
     subgraph "Standardized Architecture per Conveyor Belt"
-    CB[Conveyor Belt] -->|Captures images| ED[Edge Device]
-    ED -->|Sends images| APIG[API Gateway]
-    APIG -->|Routes requests| EC2[EC2 Instance<br>YOLOv8n Model]
-    EC2 -->|Processes images| EC2
-    EC2 -->|Stores results| S3R[S3 Results Storage]
-    EC2 -->|Returns results| APIG
-    APIG -->|Sends responses| ED
-    ED -->|Controls| CB
-    CW[CloudWatch] -->|Monitors| EC2
-    CW -->|Monitors| APIG
-    CW -->|Monitors| S3R
-    S3R -->|Extracts metrics| LF[Lambda Function]
-    LF -->|Stores metrics file| S3MF[S3 Metrics Files]
-    LF -->|Deletes data| S3R
+    CB[Conveyor Belt] -- Captures images --> ED[Edge Device]
+    ED -- Sends images --> APIG[API Gateway]
+    APIG -- Routes requests --> EC2[EC2 Instance<br>YOLOv8n Model]
+    EC2 -- Processes images --> EC2
+    EC2 -- Stores results --> S3R[S3 Results Storage]
+    EC2 -- Returns results --> APIG
+    APIG -- Sends responses --> ED
+    ED -- Controls --> CB
+    CW[CloudWatch] -- Monitors --> EC2
+    CW -- Monitors --> APIG
+    CW -- Monitors --> S3R
+    S3R -- Extracts metrics --> LF[Lambda Function]
+    LF -- Stores metrics file --> S3MF[S3 Metrics Files]
+    LF -- Deletes data --> S3R
     end
-
     classDef aws fill:#FF9900,stroke:#232F3E,stroke-width:2px,color:#232F3E;
     class APIG,EC2,S3R,CW,LF,S3MF aws;
     classDef factory fill:#4CAF50,stroke:#45A049,stroke-width:2px,color:#fff;
