@@ -94,7 +94,7 @@ This document outlines the development process for the egg fertility detection s
 
 1. **Multiple Detections**
    - Challenge: Occasional detection of a single egg as two objects
-   - Solution: Implemented correction code in testing scripts, integrated into Lambda function for production
+   - Solution: Implemented correction code in testing scripts, integrated into EC2 Instance for production
 
 2. **Speed vs. Accuracy Trade-off**
    - Challenge: Balancing processing speed with detection accuracy
@@ -106,7 +106,8 @@ This document outlines the development process for the egg fertility detection s
 
 4. **Real-time Processing**
    - Challenge: Ensuring low-latency processing for high-speed conveyor belts
-   - Solution: Streamlined Lambda function, implemented efficient correction code
+   - Solution: Custom fit EC2 instance selection for high-speed conveyor belts, implemented efficient correction code
+   DISCLAIMER: If you're using any EC2 Instance other than g4dn.xlarge go to https://github.com/DimitriVavoulisPortfolio/aws-computer-vision-industrial-egg-fertility-sorting-system/blob/main/AWS-PLAN-DESIGN-AND-COST-REPORT.md and use the calculations there as a template for adjustment 
 
 5. **Industrial Environment Integration**
    - Challenge: Adapting the system to various lighting conditions and conveyor speeds
