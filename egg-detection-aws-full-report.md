@@ -6,11 +6,10 @@
 
 ```mermaid
 graph LR
-    subgraph "Factory Environment"
+    subgraph "Standardized Architecture per Conveyor Belt"
     CB[Conveyor Belt] -->|Captures images| ED[Edge Device]
     ED -->|Sends images| APIG[API Gateway]
-    APIG -->|Routes requests| EC2[EC2 Instance]
-    EC2 -->|Reads model| S3M[S3 Model Storage]
+    APIG -->|Routes requests| EC2[EC2 Instance<br>YOLOv8n Model]
     EC2 -->|Processes images| EC2
     EC2 -->|Stores results| S3R[S3 Results Storage]
     EC2 -->|Returns results| APIG
@@ -18,49 +17,40 @@ graph LR
     ED -->|Controls| CB
     CW[CloudWatch] -->|Monitors| EC2
     CW -->|Monitors| APIG
-    CW -->|Monitors| S3M
     CW -->|Monitors| S3R
-    end
-
-    subgraph "Factory Setup"
-    FS[5 Conveyor Belts <br> 16 hours/day, 6 days/week] -.-> CB
-    end
-
-    subgraph "Data Retention"
     S3R -->|Extracts metrics| LF[Lambda Function]
     LF -->|Stores metrics file| S3MF[S3 Metrics Files]
     LF -->|Deletes data| S3R
     end
 
     classDef aws fill:#FF9900,stroke:#232F3E,stroke-width:2px,color:#232F3E;
-    class APIG,EC2,S3M,S3R,CW,LF,S3MF aws;
+    class APIG,EC2,S3R,CW,LF,S3MF aws;
     classDef factory fill:#4CAF50,stroke:#45A049,stroke-width:2px,color:#fff;
     class CB,ED factory;
 ```
 
 ### 1.2 Components
 
-1. **Edge Devices**
+1. **Edge Device**
    - One per conveyor belt
-   - Capture images of eggs on conveyor belts
-   - Send images to AWS for processing
-   - Receive and act on results
+   - Captures images of eggs on the conveyor belt
+   - Sends images to AWS for processing
+   - Receives and acts on results
 
 2. **API Gateway**
-   - Provides secure API endpoint for all edge devices
+   - Provides secure API endpoint for the edge device
 
-3. **EC2 Instances**
-   - Run the YOLOv8n model for egg fertility detection
-   - One instance per conveyor belt
-   - Process images from their respective conveyor belt
+3. **EC2 Instance**
+   - Runs the YOLOv8n model for egg fertility detection
+   - Processes images from the conveyor belt
+   - Stores results temporarily in S3
 
 4. **S3 Buckets**
-   - Model Storage: For storing the YOLOv8n model
    - Results Storage: For temporary storage of processing results and logs
    - Metrics Files: For storing daily metrics files before data deletion
 
 5. **CloudWatch**
-   - Monitors system performance and health across all components
+   - Monitors system performance and health for the conveyor belt
 
 6. **Lambda Function**
    - Extracts daily metrics from the Results Storage
@@ -69,16 +59,16 @@ graph LR
 
 ### 1.3 Data Flow
 
-1. Edge devices capture images of eggs on their respective conveyor belts
+1. Edge device captures images of eggs on the conveyor belt
 2. Images are sent to API Gateway
-3. API Gateway routes requests to the corresponding EC2 instance
-4. EC2 instances process the images:
-   - Load model from S3 (if not already in memory)
-   - Perform fertility detection
-   - Store results temporarily in S3
-   - Return results to API Gateway
-5. Results are sent back to the respective edge devices
-6. Edge devices control conveyor belts based on results
+3. API Gateway routes requests to the EC2 instance
+4. EC2 instance processes the images:
+   - Runs YOLOv8n model (packaged with the instance)
+   - Performs fertility detection
+   - Stores results temporarily in S3
+   - Returns results to API Gateway
+5. Results are sent back to the edge device
+6. Edge device controls the conveyor belt based on results
 7. Lambda function runs daily:
    - Extracts metrics from the Results Storage
    - Stores metrics in a file in the Metrics Files S3 bucket
@@ -90,31 +80,31 @@ The factory has the following setup:
 
 - 5 Conveyor Belts
 - Each conveyor belt operates 16 hours per day, 6 days per week
-- The architecture will be replicated for each of the 5 conveyor belts
+- The standardized architecture will be replicated for each of the 5 conveyor belts
 
 This setup will be used as the basis for the cost estimation and scaling considerations.
 
 ## 2. Implementation Plan
 
-### Phase 1: AWS Infrastructure Setup
-1. Create S3 buckets for model storage, results storage, and metrics files
-2. Set up EC2 instances (one per conveyor belt) with YOLOv8n model
+### Phase 1: AWS Infrastructure Setup (Per Conveyor Belt)
+1. Create S3 buckets for results storage and metrics files
+2. Set up EC2 instance with YOLOv8n model packaged
 3. Configure API Gateway and create necessary endpoints
 4. Set up CloudWatch monitoring for all components
 5. Create Lambda function for metrics extraction and data deletion
 
-### Phase 2: Edge Device Integration
-1. Install and configure edge devices for each conveyor belt
+### Phase 2: Edge Device Integration (Per Conveyor Belt)
+1. Install and configure edge device for the conveyor belt
 2. Develop software for image capture and communication with API Gateway
 3. Test image capture and transmission
 
-### Phase 3: System Testing and Optimization
-1. Conduct end-to-end testing with all 5 conveyor belts
-2. Optimize EC2 instance types based on performance
-3. Fine-tune edge device configurations
+### Phase 3: System Testing and Optimization (Per Conveyor Belt)
+1. Conduct end-to-end testing with the conveyor belt
+2. Optimize EC2 instance type based on performance
+3. Fine-tune edge device configuration
 4. Test and optimize Lambda function for metrics extraction and data deletion
 
-### Phase 4: Production Rollout
+### Phase 4: Production Rollout (For All Conveyor Belts)
 1. Train factory personnel on system operation
 2. Perform final system checks
 3. Start production monitoring and support
@@ -122,12 +112,12 @@ This setup will be used as the basis for the cost estimation and scaling conside
 
 ## 3. Cost Estimation
 
-### 3.1 Usage-Based Cost Breakdown (For Entire Factory)
+### 3.1 Usage-Based Cost Breakdown (Per Conveyor Belt)
 
-#### EC2 Instances (g4dn.xlarge)
-- On-Demand: $0.526 per hour per instance
-- 1-year Reserved Instance (No Upfront): $0.332 per hour per instance
-- 3-year Reserved Instance (All Upfront): $0.196 per hour per instance
+#### EC2 Instance (g4dn.xlarge)
+- On-Demand: $0.526 per hour
+- 1-year Reserved Instance (No Upfront): $0.332 per hour
+- 3-year Reserved Instance (All Upfront): $0.196 per hour
 
 #### API Gateway
 - Cost per 1 million API calls: $3.50
@@ -154,36 +144,41 @@ The factory setup is as follows:
 - Monthly production per belt (4 weeks): 19,200,000 eggs
 - Total monthly production: 5 * 19,200,000 = 96,000,000 eggs
 
-#### Cost Calculation (Total Factory, Per Month)
+#### Cost Calculation (Per Conveyor Belt, Per Month)
 
-1. **EC2 Instances** (One instance per conveyor belt)
-   - Hours: 5 * 16 * 6 * 4 = 1920 hours per month
-   - On-Demand Cost: 5 * 384 * $0.526 = $1,009.92
-   - 1-year RI Cost: 5 * 384 * $0.332 = $637.44
-   - 3-year RI Cost: 5 * 384 * $0.196 = $376.32
+1. **EC2 Instance**
+   - Hours: 16 * 6 * 4 = 384 hours per month
+   - On-Demand Cost: 384 * $0.526 = $201.98
+   - 1-year RI Cost: 384 * $0.332 = $127.49
+   - 3-year RI Cost: 384 * $0.196 = $75.26
 
 2. **API Gateway**
-   - API calls: 96,000,000
-   - Cost: 96 * $3.50 = $336.00
+   - API calls: 19,200,000
+   - Cost: 19.2 * $3.50 = $67.20
 
 3. **S3 Storage** (with automatic deletion after 24 hours)
    - Assuming 5 KB per egg for results and logs
-   - Daily storage: (96,000,000 / 30) * 5 KB = 16 GB
-   - Storage cost: 16 GB * $0.023 = $0.37
+   - Daily storage: (19,200,000 / 30) * 5 KB = 3.2 GB
+   - Storage cost: 3.2 GB * $0.023 = $0.07
 
 4. **S3 Requests**
-   - PUT requests (1 per egg): 96,000 * $0.005 = $0.48
-   - GET requests (assuming 10% retrieval): 9,600 * $0.0004 = $0.00384
+   - PUT requests (1 per egg): 19,200 * $0.005 = $0.10
+   - GET requests (assuming 10% retrieval): 1,920 * $0.0004 = $0.00077
 
 5. **Lambda**
    - Assumed 1 minute runtime per day
    - Monthly compute time: 1 * 30 = 30 minutes = 1,800 seconds
    - Monthly compute cost: 1,800 * $0.0000166667 = $0.03
 
-#### Total Monthly Cost For Factory
-- Using On-Demand EC2: $1,009.92 + $336.00 + $0.37 + $0.48 + $0.00384 + $0.03 ≈ $1,346.80
-- Using 1-year RI EC2: $637.44 + $336.00 + $0.37 + $0.48 + $0.00384 + $0.03 ≈ $974.32
-- Using 3-year RI EC2: $376.32 + $336.00 + $0.37 + $0.48 + $0.00384 + $0.03 ≈ $713.20
+#### Total Monthly Cost Per Conveyor Belt
+- Using On-Demand EC2: $201.98 + $67.20 + $0.07 + $0.10 + $0.00077 + $0.03 ≈ $269.38
+- Using 1-year RI EC2: $127.49 + $67.20 + $0.07 + $0.10 + $0.00077 + $0.03 ≈ $194.89
+- Using 3-year RI EC2: $75.26 + $67.20 + $0.07 + $0.10 + $0.00077 + $0.03 ≈ $142.66
+
+#### Total Monthly Cost For Factory (5 Conveyor Belts)
+- Using On-Demand EC2: 5 * $269.38 ≈ $1,346.90
+- Using 1-year RI EC2: 5 * $194.89 ≈ $974.45
+- Using 3-year RI EC2: 5 * $142.66 ≈ $713.30
 
 ### 3.3 Additional Considerations
 
@@ -191,7 +186,7 @@ The factory setup is as follows:
 
 2. **CloudWatch Costs**: Basic monitoring is included free. If detailed monitoring is required, additional costs of $2.10 per instance per month would apply.
 
-3. **Model Updates**: Costs for occasional model updates are minimal and not included in this calculation.
+3. **Model Updates**: With the model packaged in the EC2 instances, updating the model requires updating the instance AMI. This can be done through a rolling update to minimize downtime.
 
 4. **Edge Computing**: This estimation assumes all processing occurs in AWS. Implementing edge computing could potentially reduce AWS costs but would increase on-premises infrastructure costs.
 
@@ -205,22 +200,22 @@ The factory setup is as follows:
 
 ## 4. Scaling Considerations
 
-- EC2: One instance per conveyor belt, sized to handle the load
-- API Gateway: Configure to handle the known maximum throughput from all edge devices
-- S3: Sized to accommodate 24-hour storage needs based on factory production volume
+- EC2: One instance per conveyor belt, sized to handle the load, with the YOLOv8n model packaged
+- API Gateway: Configure to handle the known maximum throughput from each edge device
+- S3: Sized to accommodate 24-hour storage needs based on each conveyor belt's production volume
 - Edge Devices: One per conveyor belt, focus on reliability and maintenance
-- Lambda: Designed to handle daily metrics extraction and data deletion for all conveyor belts
+- Lambda: Designed to handle daily metrics extraction and data deletion for each conveyor belt
 
 ## 5. Monitoring and Maintenance Plan
 
-1. Set up CloudWatch alarms for:
+1. Set up CloudWatch alarms for each conveyor belt:
    - EC2 instance CPU utilization, network I/O, and status checks
    - API Gateway 4xx and 5xx errors
    - S3 bucket size and request count
    - Edge device connectivity
    - Lambda function errors and timeouts
 
-2. Implement logging:
+2. Implement logging for each conveyor belt:
    - EC2 instance logs to CloudWatch Logs
    - S3 access logs (retained for compliance purposes)
    - Edge device logs
