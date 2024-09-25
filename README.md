@@ -11,14 +11,14 @@ This project is a production-ready YOLOv8n-based Computer Vision system for egg 
 - Designed for low compute costs to maximize scalability
 - Comprehensive testing with both individual images and batch processing
 - Correction mechanism for handling multiple detections
-- Designs for AWS serverless architecture for potential future deployment
+- Designs for AWS architecture for potential future deployment
 
 ## Project Structure
 
 1. **Data processing and Training**: Scripts for data preparation and model training
 2. **YOLOv8n_egg_fertility_model**: Trained YOLOv8n model for egg fertility detection
 3. **Testing scripts**: Scripts for testing the model, including individual image and batch processing
-4. **AWS Implementation Design**: Proposed AWS serverless architecture for deployment
+4. **AWS Implementation Design**: Proposed standarized AWS architecture for highly scalable deployment
 
 ## Documentation
 
