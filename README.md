@@ -8,7 +8,6 @@ This project is a production-ready YOLOv8n-based Computer Vision system for egg 
 
 - Pre-trained YOLOv8n model for egg fertility detection
 - Optimized for high-speed conveyor belt operations
-- Designed for low compute costs to maximize scalability
 - Comprehensive testing with both individual images and batch processing
 - Correction mechanism for handling multiple detections
 - Designs for AWS architecture for potential future deployment
