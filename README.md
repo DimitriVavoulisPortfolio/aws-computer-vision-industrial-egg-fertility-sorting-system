@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-This project is a production-ready YOLOv8n-based Computer Vision system for egg fertility detection, designed for high-speed, single-column conveyor belt operations in industrial settings. The system provides accurate and efficient sorting of eggs into fertile and infertile categories, optimized for speed and cost-effectiveness.
+This project is a production-ready YOLOv8n-based Computer Vision system for egg fertility detection, designed for high-speed, single-column conveyor belt operations in industrial settings. The system provides accurate and efficient sorting of eggs into fertile and infertile categories, optimized for speed and cost-effectiveness in a highly scalable way.
 
 ### Key Features
 
