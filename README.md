@@ -23,13 +23,13 @@ This project is a production-ready YOLOv8n-based Computer Vision system for egg 
 
 ## Documentation
 
-- **MODEL.md**: Detailed information about the model architecture, training process, and performance
-- **PROCESS.md**: Comprehensive overview of the development process and implementation plan
-- **AWS-PLAN-DESIGN-AND-COST-REPORT.md**: Detailed report on the proposed AWS implementation and associated costs
-- **Testing-dataset.png**:
+- **MODEL.md**: https://github.com/DimitriVavoulisPortfolio/aws-computer-vision-industrial-egg-fertility-sorting-system/blob/main/MODEL.md
+- **PROCESS.md**: https://github.com/DimitriVavoulisPortfolio/aws-computer-vision-industrial-egg-fertility-sorting-system/blob/main/PROCESS.md
+- **AWS-PLAN-DESIGN-AND-COST-REPORT.md**: https://github.com/DimitriVavoulisPortfolio/aws-computer-vision-industrial-egg-fertility-sorting-system/blob/main/AWS-PLAN-DESIGN-AND-COST-REPORT.md
 
 ## Model Performance
 
+- **Testing-dataset.png**: https://github.com/DimitriVavoulisPortfolio/aws-computer-vision-industrial-egg-fertility-sorting-system/blob/main/Testing-dataset.PNG
 - **Accuracy: 1.00**
 - **Precision: 1.00**
 - **Recall: 1.00**
