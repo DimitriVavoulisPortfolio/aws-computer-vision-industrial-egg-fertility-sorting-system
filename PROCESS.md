@@ -66,42 +66,29 @@ This document outlines the development process for the egg fertility detection s
 
 ## Implementation Plan
 
-### Phase 1: AWS Infrastructure Setup
-1. Create S3 buckets for model and results storage
-2. Develop Lambda function for egg fertility detection
-3. Implement correction code for multiple detections in Lambda function
-4. Set up API Gateway and create necessary endpoints
-5. Configure CloudWatch monitoring
-6. Test basic infrastructure
+### Phase 1: AWS Infrastructure Setup (Per Conveyor Belt)
+1. Create S3 buckets for results storage and metrics files
+2. Set up EC2 instance with YOLOv8n model packaged
+3. Configure API Gateway and create necessary endpoints
+4. Set up CloudWatch monitoring for all components
+5. Create Lambda function for metrics extraction and data deletion
 
-### Phase 2: Edge Device Integration
-1. Develop software for edge devices optimized for single-column conveyor belt
-2. Implement secure communication with API Gateway
+### Phase 2: Edge Device Integration (Per Conveyor Belt)
+1. Install and configure edge device for the conveyor belt
+2. Develop software for image capture and communication with API Gateway
 3. Test image capture and transmission
-4. Ensure synchronization with conveyor belt movement
 
-### Phase 3: Model Deployment and Testing
-1. Upload trained YOLOv8n model to S3
-2. Implement model loading and inference in Lambda function
-3. Integrate correction code for multiple detections
-4. Conduct performance testing and optimization
+### Phase 3: System Testing and Optimization (Per Conveyor Belt)
+1. Conduct end-to-end testing with the conveyor belt
+2. Optimize EC2 instance type based on performance
+3. Fine-tune edge device configuration
+4. Test and optimize Lambda function for metrics extraction and data deletion
 
-### Phase 4: Integration and End-to-End Testing
-1. Integrate edge devices with conveyor belt controls
-2. Perform end-to-end system testing
-3. Optimize for industrial environment (e.g., lighting conditions, conveyor speed)
-4. Validate correction code effectiveness in production-like conditions
-
-### Phase 5: Security and Compliance
-1. Implement encryption for data in transit and at rest
-2. Conduct security audit
-3. Ensure compliance with food industry standards
-
-### Phase 6: Documentation and Deployment
-1. Prepare technical documentation, including details on multiple detection handling
-2. Develop deployment and maintenance procedures
-3. Train factory personnel on system operation
-4. Deploy to production environment
+### Phase 4: Production Rollout (For All Conveyor Belts)
+1. Train factory personnel on system operation
+2. Perform final system checks
+3. Start production monitoring and support
+4. Continuously monitor and optimize system performance
 
 ## Challenges and Solutions
 
