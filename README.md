@@ -59,7 +59,7 @@ Speed Performance:
 
 4. To test the model with batch processing:
    ```
-   python test_batch_images.py
+   python yolov8n-egg-detection-test-script.py
    ```
 DISCLAIMER: The paths for the model and test images need to be specified by the user.
 
