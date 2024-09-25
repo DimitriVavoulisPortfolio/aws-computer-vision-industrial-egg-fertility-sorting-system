@@ -76,9 +76,9 @@ def evaluate_model(model, image_dir, test_predictions):
     print(f"F1-score: {f1_score:.2f}")
 
 def main():
-    model_path = "C:/Github-uploading/aws-computer-vision-industrial-egg-fertility-sorting-system/egg_detection_yolov8n_final.pt"
-    image_dir = "C:/Github-uploading/aws-computer-vision-industrial-egg-fertility-sorting-system/archive-eggs/test/images"
-    csv_path = "C:/Github-uploading/aws-computer-vision-industrial-egg-fertility-sorting-system/archive-eggs/test/labels/test_predictions.csv"
+    model_path = "C:\path\to\"
+    image_dir = "C:\path\to\"
+    csv_path = "C:\path\to\"
 
     model = load_model(model_path)
     if model is None:
