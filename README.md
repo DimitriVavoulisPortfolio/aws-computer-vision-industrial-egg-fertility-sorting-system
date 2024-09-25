@@ -12,6 +12,7 @@ This project is a production-ready YOLOv8n-based Computer Vision system for egg 
 - Correction mechanism for handling multiple detections
 - Designs for AWS architecture for potential future deployment
 - Standarized design for implementation to per conveyor belt for high scalability
+- Dataset: https://www.kaggle.com/datasets/mwahyuadin/dataset-of-fertile-and-infertile-chicken-eggs
 
 ## Project Structure
 
