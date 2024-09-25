@@ -57,9 +57,9 @@ Speed Performance:
    python test_single_image.py
    ```
 
-4. To test the model with batch processing:
+4. To test the model with datasets:
    ```
-   python test_batch_images.py
+   python yolov8n-egg-detection-test-script.py
    ```
 DISCLAIMER: The paths for the model and test images need to be specified by the user.
 
